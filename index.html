@@ -1086,7 +1086,7 @@
                 </p>
             </div>
             <div class="contact-card fade-in">
-                <form action="https://formspree.io/f/xpwazokg" method="POST" class="contact-form">
+                <form id="contact-form" class="contact-form" onsubmit="return sendEmail(event)">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="name">Name</label>
@@ -1101,19 +1101,17 @@
                         <label for="subject">Subject</label>
                         <select id="subject" name="subject" required>
                             <option value="" disabled selected>Select a topic</option>
-                            <option value="general">General Question</option>
-                            <option value="bug">Bug Report</option>
-                            <option value="feature">Feature Request</option>
-                            <option value="support">Support</option>
-                            <option value="other">Other</option>
+                            <option value="General Question">General Question</option>
+                            <option value="Bug Report">Bug Report</option>
+                            <option value="Feature Request">Feature Request</option>
+                            <option value="Support">Support</option>
+                            <option value="Other">Other</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="message">Message</label>
                         <textarea id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
                     </div>
-                    <input type="hidden" name="_subject" value="DNS Jantex - Contact Form">
-                    <input type="hidden" name="_cc" value="Aidinkm1@proton.me">
                     <button type="submit" class="btn-primary">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M22 2L11 13"/>
@@ -1183,6 +1181,23 @@
     </footer>
 
     <script>
+        // Contact form mailto handler
+        function sendEmail(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            const mailtoLink = `mailto:Aidinkm1@proton.me?subject=${encodeURIComponent('[DNS Jantex] ' + subject)}&body=${encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\nMessage:\n' + message)}`;
+
+            window.location.href = mailtoLink;
+
+            // Show success message
+            alert('Opening your email client to send the message to Aidinkm1@proton.me');
+            return false;
+        }
+
         // Navbar scroll effect
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
